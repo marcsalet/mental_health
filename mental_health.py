@@ -12,3 +12,5 @@ df = pd.read_csv('data/students_mental_health.csv')
 
 col = db.execute("PRAGMA table_info('data')").fetchdf()
 print(col)
+
+#test hello wworld tout ça  
