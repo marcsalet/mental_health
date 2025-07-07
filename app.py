@@ -54,6 +54,33 @@ if uploaded_file:
     )
     st.plotly_chart(fig)
 
+
+        # Nouveau KPI : répartition par genre parmi ceux en dépression
+    df_dep_gender = con.execute("""
+        SELECT "Choose your gender" as gender, COUNT(*) as nb
+        FROM mental_health
+        WHERE UPPER("Do you have Depression?") = 'YES'
+        GROUP BY "Choose your gender"
+    """).fetchdf()
+
+    # calcul du pourcentage
+    total_dep = df_dep_gender['nb'].sum()
+    df_dep_gender['percentage'] = (df_dep_gender['nb'] / total_dep * 100).round(2)
+
+    # affichage du camembert
+    st.subheader("🥧 Répartition par genre parmi les étudiants déclarant une dépression")
+    fig_pie = px.pie(
+        df_dep_gender,
+        names='gender',
+        values='percentage',
+        color='gender',
+        title="Répartition par genre (en %)",
+        hover_data=['nb']
+    )
+    fig_pie.update_traces(textinfo='percent+label')
+    st.plotly_chart(fig_pie)
+
+
     con.close()
 
 else:
