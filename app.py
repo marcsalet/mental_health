@@ -15,7 +15,7 @@ if uploaded_file:
     st.write(df.head())
 
     # Vérifie les colonnes
-    st.write("Colonnes du CSV (pour vérification) :", df.columns.tolist())
+    #st.write("Colonnes du CSV (pour vérification) :", df.columns.tolist())
 
     # Créer la table dans DuckDB (nom : mental_health)
     con = load_to_duckdb(df)
@@ -26,6 +26,7 @@ if uploaded_file:
 
     lignes = result.loc[0, 'nb_lignes']  #int contenant le nombre total de lignes
     st.subheader("✅ Nombre de réponses dans le dataset : " + str(lignes))
+
 
 
     # KPI: répartition Yes/No pour la dépression
